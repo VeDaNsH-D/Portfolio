@@ -1,77 +1,84 @@
 body {
-    background-color: #0d0d0d;
-    color: #33ff33; /* Classic Terminal Green */
-    font-family: 'Courier New', Courier, monospace;
     margin: 0;
     overflow: hidden;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    font-size: 16px;
+    background-color: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
 }
 
-/* The CRT Scanline Effect */
-.crt-overlay {
-    position: fixed;
+#canvas-container {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+}
+
+#ui-layer {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    pointer-events: none; /* Let clicks pass through to the 3D canvas */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#ui-layer h1 {
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+#ui-layer p {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* Modal Styling */
+.hidden {
+    display: none !important;
+}
+
+#modal {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(
-        rgba(18, 16, 16, 0) 50%, 
-        rgba(0, 0, 0, 0.25) 50%
-    );
-    background-size: 100% 4px;
-    pointer-events: none; /* Allows clicking through the overlay */
-    z-index: 999;
-}
-
-#terminal {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    /* Subtle text glow */
-    text-shadow: 0 0 5px rgba(51, 255, 51, 0.7); 
-}
-
-/* Hide scrollbar but allow scrolling */
-#terminal::-webkit-scrollbar {
-    display: none;
-}
-
-#output {
-    white-space: pre-wrap; /* Preserves formatting */
-    margin-bottom: 10px;
-}
-
-.output-line {
-    margin: 5px 0;
-    line-height: 1.5;
-}
-
-#input-line {
     display: flex;
+    justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 10;
 }
 
-.prompt {
-    color: #00cc00;
-    margin-right: 10px;
-    font-weight: bold;
+.modal-content {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #00ffff;
+    padding: 40px;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+    transform: scale(0.8);
+    animation: popIn 0.3s forwards;
 }
 
-input {
+button {
     background: transparent;
-    border: none;
-    color: #33ff33;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    flex-grow: 1;
-    outline: none;
-    text-shadow: 0 0 5px rgba(51, 255, 51, 0.7);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
 }
 
-/* Utility classes for specific output colors */
-.error { color: #ff3333; }
-.highlight { color: #ffff33; font-weight: bold; }
-.system { color: #33ffff; }
+button:hover {
+    background: #00ffff;
+    color: #000;
+}
+
+@keyframes popIn {
+    to { transform: scale(1); }
+}
