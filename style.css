@@ -1,0 +1,77 @@
+body {
+    background-color: #0d0d0d;
+    color: #33ff33; /* Classic Terminal Green */
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* The CRT Scanline Effect */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none; /* Allows clicking through the overlay */
+    z-index: 999;
+}
+
+#terminal {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    /* Subtle text glow */
+    text-shadow: 0 0 5px rgba(51, 255, 51, 0.7); 
+}
+
+/* Hide scrollbar but allow scrolling */
+#terminal::-webkit-scrollbar {
+    display: none;
+}
+
+#output {
+    white-space: pre-wrap; /* Preserves formatting */
+    margin-bottom: 10px;
+}
+
+.output-line {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+#input-line {
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    color: #00cc00;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+input {
+    background: transparent;
+    border: none;
+    color: #33ff33;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    flex-grow: 1;
+    outline: none;
+    text-shadow: 0 0 5px rgba(51, 255, 51, 0.7);
+}
+
+/* Utility classes for specific output colors */
+.error { color: #ff3333; }
+.highlight { color: #ffff33; font-weight: bold; }
+.system { color: #33ffff; }
