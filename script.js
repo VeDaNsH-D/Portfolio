@@ -1,135 +1,55 @@
-const outputDiv = document.getElementById('output');
-const inputField = document.getElementById('command-input');
-const terminal = document.getElementById('terminal');
+const cursor = document.getElementById('cursor');
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*";
 
-const commands = {
-    help: "Available commands: [whoami] [projects] [skills] [contact] [clear] [sudo]",
-    whoami: "I am a developer passionate about low-level systems, algorithms, and breaking things to see how they work.",
-    skills: "C++ | Python | JavaScript | System Architecture | Reverse Engineering",
-    projects: "1. Portfolio_Terminal (Web)\n2. Neural_Net_From_Scratch (C++)\n3. Auto_Trading_Bot (Python)",
-    contact: "Email: dev@example.com | GitHub: github.com/user",
-    sudo: "usage: sudo [command]\nTry: 'sudo rm -rf /' (at your own risk)"
-};
-
-// Initial Boot Sequence Text
-const bootText = [
-    "Initializing kernel...",
-    "Loading modules...",
-    "Mounting file system...",
-    "Access granted.",
-    "Welcome to the Portfolio Terminal. Type 'help' to begin."
-];
-
-// Function to simulate typing effect
-async function typeLine(text, delay = 50) {
-    const line = document.createElement('div');
-    line.className = 'output-line system';
-    outputDiv.appendChild(line);
-    
-    for (let char of text) {
-        line.textContent += char;
-        await new Promise(r => setTimeout(r, delay));
-        terminal.scrollTop = terminal.scrollHeight;
-    }
-}
-
-// Run boot sequence on load
-window.onload = async () => {
-    inputField.disabled = true;
-    for (let line of bootText) {
-        await typeLine(line, 30);
-    }
-    inputField.disabled = false;
-    inputField.focus();
-};
-
-// Keep focus on input
-document.addEventListener('click', () => {
-    inputField.focus();
+// 1. Custom Cursor Movement
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
 });
 
-inputField.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        const input = inputField.value.trim();
-        if (input) {
-            processCommand(input);
-        }
-        inputField.value = '';
-    }
-});
+// 2. The Hacker Text Scramble Effect
+// Target everything with class 'glitch' or 'project-item'
+const targets = document.querySelectorAll('.glitch, .project-item');
 
-function processCommand(cmd) {
-    // Echo the command
-    const commandLine = document.createElement('div');
-    commandLine.className = 'output-line';
-    commandLine.innerHTML = `<span class="prompt">visitor@portfolio:~$</span> ${cmd}`;
-    outputDiv.appendChild(commandLine);
+targets.forEach(target => {
+    target.addEventListener('mouseenter', event => {
+        
+        // Scale cursor up on hover
+        cursor.style.width = '80px';
+        cursor.style.height = '80px';
 
-    const args = cmd.split(' ');
-    const mainCmd = args[0].toLowerCase();
+        // Start Scramble
+        let iteration = 0;
+        const originalText = target.dataset.value; 
+        
+        // If it's a project item, we are targeting the .p-name child
+        const textElement = target.classList.contains('project-item') 
+            ? target.querySelector('.p-name') 
+            : target;
 
-    let response = '';
-    let styleClass = '';
+        clearInterval(textElement.interval);
 
-    // Command Logic
-    if (commands[mainCmd]) {
-        if (mainCmd === 'sudo') {
-            if (args[1] === 'rm' && args[2] === '-rf' && args[3] === '/') {
-                triggerSelfDestruct();
-                return;
-            } else {
-                response = commands.sudo;
+        textElement.interval = setInterval(() => {
+            textElement.innerText = originalText
+                .split("")
+                .map((letter, index) => {
+                    if(index < iteration) {
+                        return originalText[index];
+                    }
+                    return letters[Math.floor(Math.random() * 26)];
+                })
+                .join("");
+            
+            if(iteration >= originalText.length){ 
+                clearInterval(textElement.interval);
             }
-        } else {
-            response = commands[mainCmd];
-        }
-    } else if (mainCmd === 'clear') {
-        outputDiv.innerHTML = '';
-        return;
-    } else {
-        response = `Command not found: ${mainCmd}. Type 'help' for options.`;
-        styleClass = 'error';
-    }
+            
+            iteration += 1 / 3; // Controls speed of decode
+        }, 30);
+    });
 
-    // Print response
-    const responseLine = document.createElement('div');
-    responseLine.className = `output-line ${styleClass}`;
-    responseLine.innerText = response;
-    outputDiv.appendChild(responseLine);
-
-    // Auto scroll
-    terminal.scrollTop = terminal.scrollHeight;
-}
-
-function triggerSelfDestruct() {
-    const lines = document.createElement('div');
-    lines.className = 'output-line error';
-    lines.innerText = "WARNING: SYSTEM CRITICAL. DELETING ASSETS...";
-    outputDiv.appendChild(lines);
-    
-    // Shake effect (basic CSS manipulation)
-    document.body.style.animation = "shake 0.5s infinite";
-    document.body.style.backgroundColor = "#330000";
-    
-    setTimeout(() => {
-        document.body.innerHTML = "<h1 style='color:red; text-align:center; margin-top:20%'>SYSTEM FAILURE</h1><p style='color:white; text-align:center'>Refresh to reboot.</p>";
-    }, 2000);
-}
-
-// Add shake animation style dynamically
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}`;
-document.head.appendChild(styleSheet);
+    target.addEventListener('mouseleave', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+    });
+});
