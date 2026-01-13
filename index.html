@@ -3,18 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User@Portfolio:~</title>
+    <title>Immersive Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="crt-overlay"></div>
-    <div id="terminal">
-        <div id="output"></div>
-        <div id="input-line">
-            <span class="prompt">visitor@portfolio:~$</span>
-            <input type="text" id="command-input" autocomplete="off" autofocus>
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <h1>NAVIGATE THE VOID</h1>
+        <p>Drag to Rotate &middot; Click Artifacts to Access Data</p>
+    </div>
+
+    <div id="modal" class="hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">Project Name</h2>
+            <p id="modal-desc">Project description goes here.</p>
+            <button id="close-btn">Close Connection</button>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script type="module" src="main.js"></script>
 </body>
 </html>
