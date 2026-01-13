@@ -1,84 +1,112 @@
+/* RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    cursor: none; /* Hide default cursor */
+}
+
 body {
-    margin: 0;
-    overflow: hidden;
-    background-color: #000;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    overflow-x: hidden;
 }
 
-#canvas-container {
-    width: 100vw;
-    height: 100vh;
-    display: block;
-}
-
-#ui-layer {
-    position: absolute;
-    bottom: 50px;
-    left: 50px;
-    pointer-events: none; /* Let clicks pass through to the 3D canvas */
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-#ui-layer h1 {
-    font-size: 2rem;
-    margin: 0;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-#ui-layer p {
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-
-/* Modal Styling */
-.hidden {
-    display: none !important;
-}
-
-#modal {
-    position: absolute;
+/* NOISE OVERLAY */
+.noise {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.05;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+}
+
+/* CUSTOM CURSOR */
+#cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s;
+}
+
+/* HERO SECTION */
+.hero {
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    z-index: 10;
+    padding: 0 5vw;
 }
 
-.modal-content {
-    background: rgba(20, 20, 20, 0.9);
-    border: 1px solid #00ffff;
-    padding: 40px;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-    transform: scale(0.8);
-    animation: popIn 0.3s forwards;
-}
-
-button {
-    background: transparent;
-    border: 1px solid #00ffff;
-    color: #00ffff;
-    padding: 10px 20px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-weight: bold;
+h1 {
+    font-size: 12vw; /* Massive Text */
+    line-height: 0.9;
     text-transform: uppercase;
-    transition: 0.3s;
+    font-weight: 900;
+    letter-spacing: -5px;
+    position: relative;
+    width: fit-content;
 }
 
-button:hover {
-    background: #00ffff;
-    color: #000;
+/* BRUTALIST GRID */
+.work {
+    padding: 10vh 5vw;
+    border-top: 2px solid #e0e0e0;
 }
 
-@keyframes popIn {
-    to { transform: scale(1); }
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.project-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid #333;
+    padding: 40px 0;
+    font-size: 4vw;
+    text-transform: uppercase;
+    transition: 0.1s;
+    font-weight: 700;
+}
+
+.project-item:hover {
+    background-color: #e0e0e0;
+    color: #0a0a0a;
+    padding-left: 20px;
+}
+
+.p-tag {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+/* GLITCH ANIMATION CSS */
+.glitch:hover {
+    animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+    color: #ff0000;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
 }
