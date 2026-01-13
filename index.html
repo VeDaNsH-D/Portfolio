@@ -3,32 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immersive Portfolio</title>
+    <title>GLITCH_PORTFOLIO</title>
     <link rel="stylesheet" href="style.css">
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-            }
-        }
-    </script>
 </head>
 <body>
-    <div id="canvas-container"></div>
+    
+    <div id="cursor"></div>
 
-    <div id="ui-layer">
-        <h1>NAVIGATE THE VOID</h1>
-        <p>Drag to Rotate &middot; Click Artifacts to Access Data</p>
-    </div>
+    <div class="noise"></div>
 
-    <div id="modal" class="hidden">
-        <div class="modal-content">
-            <h2 id="modal-title">Project Name</h2>
-            <p id="modal-desc">Project description goes here.</p>
-            <button id="close-btn">Close Connection</button>
-        </div>
-    </div>
+    <main>
+        <section class="hero">
+            <h1 class="glitch" data-value="UNDEFINED">UNDEFINED</h1>
+            <h1 class="glitch" data-value="DEVELOPER">DEVELOPER</h1>
+        </section>
 
-    <script type="module" src="main.js"></script>
+        <section class="work">
+            <div class="header-row">
+                <span>INDEX</span>
+                <span>STATUS</span>
+            </div>
+            
+            <div class="project-item" data-value="NEURAL_NET_V1">
+                <span class="p-name">NEURAL_NET_V1</span>
+                <span class="p-tag">PYTHON / AI</span>
+            </div>
+
+            <div class="project-item" data-value="COMPILER_ZERO">
+                <span class="p-name">COMPILER_ZERO</span>
+                <span class="p-tag">C++ / SYS</span>
+            </div>
+
+            <div class="project-item" data-value="ANALOG_SYNTH">
+                <span class="p-name">ANALOG_SYNTH</span>
+                <span class="p-tag">HARDWARE</span>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
